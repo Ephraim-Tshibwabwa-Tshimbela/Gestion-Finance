@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Accueil - Gestionnaire Financier{% endblock %}
+
+{% block content %}
+<div class="row align-items-center min-vh-50">
+    <div class="col-md-6">
+        <h1 class="display-4 fw-bold">Prenez le contrôle de vos finances</h1>
+        <p class="lead">
+            FinanceTracker vous aide à suivre vos revenus et dépenses, 
+            visualiser votre situation financière et atteindre vos objectifs.
+        </p>
+        <div class="mt-4">
+            {% if not session.user_id %}
+            <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg me-3">
+                Commencer gratuitement
+            </a>
+            <a href="{{ url_for('login') }}" class="btn btn-outline-primary btn-lg">
+                Se connecter
+            </a>
+            {% else %}
+            <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-lg me-3">
+                Tableau de bord
+            </a>
+            <a href="{{ url_for('add_transaction') }}" class="btn btn-outline-primary btn-lg">
+                Ajouter une transaction
+            </a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6 text-center">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Fonctionnalités</h5>
+                <ul class="list-unstyled">
+                    <li>✅ Suivi des revenus et dépenses</li>
+                    <li>✅ Graphiques et statistiques</li>
+                    <li>✅ Multi-devises (USD et CDF)</li>
+                    <li>✅ Interface simple et intuitive</li>
+                    <li>✅ 100% gratuit</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

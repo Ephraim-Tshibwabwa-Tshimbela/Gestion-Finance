@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">Connexion</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Nom d'utilisateur</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Mot de passe</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Se connecter</button>
+                </form>
+                
+                <div class="mt-3 text-center">
+                    <p class="mb-2">Nouveau utilisateur ?</p>
+                    <a href="{{ url_for('register') }}" class="btn btn-outline-primary btn-sm">
+                        Créer un compte
+                    </a>
+                </div>
+
+                <!-- Supprimer ou commenter les informations de test si vous voulez -->
+                <!--
+                <div class="mt-3">
+                    <small class="text-muted">
+                        Compte de test: <strong>test</strong> / <strong>test123</strong>
+                    </small>
+                </div>
+                -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

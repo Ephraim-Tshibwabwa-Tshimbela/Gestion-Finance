@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block title %}Nouvelle Transaction{% endblock %}
+
+{% block content %}
+<div class="fade-in">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mb-0">Nouvelle Transaction</h4>
+        <a href="{{ url_for('dashboard') }}" class="btn btn-sm btn-outline-secondary">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h6 class="mb-0">
+                <i class="fas fa-plus-circle me-1"></i>Saisie de Transaction
+            </h6>
+        </div>
+        <div class="card-body">
+            <form method="POST" id="transactionForm">
+                <!-- Type de Transaction -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Type de transaction</label>
+                    <div class="btn-group w-100" role="group">
+                        <input type="radio" class="btn-check" name="type" id="income" value="income" checked>
+                        <label class="btn btn-outline-success" for="income">
+                            <i class="fas fa-arrow-down me-1"></i>Revenu
+                        </label>
+                        
+                        <input type="radio" class="btn-check" name="type" id="expense" value="expense">
+                        <label class="btn btn-outline-danger" for="expense">
+                            <i class="fas fa-arrow-up me-1"></i>Dépense
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Montant et Devise -->
+                <div class="row mb-3">
+                    <div class="col-8">
+                        <label for="amount" class="form-label fw-bold">Montant</label>
+                        <input type="number" step="0.01" min="0.01" class="form-control form-control-lg" 
+                               id="amount" name="amount" placeholder="0.00" required>
+                    </div>
+                    <div class="col-4">
+                        <label for="currency" class="form-label fw-bold">Devise</label>
+                        <select class="form-select" id="currency" name="currency" required>
+                            <option value="USD" {% if user_currency == 'USD' %}selected{% endif %}>$ USD</option>
+                            <option value="CDF" {% if user_currency == 'CDF' %}selected{% endif %}>FC CDF</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Catégorie -->
+                <div class="mb-3">
+                    <label for="category" class="form-label fw-bold">Catégorie</label>
+                    <select class="form-select" id="category" name="category">
+                        <option value="">Sélectionnez une catégorie</option>
+                        <option value="Salaire">Salaire</option>
+                        <option value="Nourriture">Nourriture</option>
+                        <option value="Transport">Transport</option>
+                        <option value="Loisirs">Loisirs</option>
+                        <option value="Santé">Santé</option>
+                        <option value="Éducation">Éducation</option>
+                        <option value="Shopping">Shopping</option>
+                        <option value="Factures">Factures</option>
+                        <option value="Autre">Autre</option>
+                    </select>
+                </div>
+
+                <!-- Description -->
+                <div class="mb-4">
+                    <label for="description" class="form-label fw-bold">Description (optionnel)</label>
+                    <textarea class="form-control" id="description" name="description" 
+                              rows="2" placeholder="Description de la transaction..."></textarea>
+                </div>
+
+                <!-- Boutons d'Action -->
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-check me-1"></i>Enregistrer la transaction
+                    </button>
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary">
+                        <i class="fas fa-times me-1"></i>Annuler
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Catégories Rapides -->
+    <div class="card mt-3">
+        <div class="card-header">
+            <h6 class="mb-0">
+                <i class="fas fa-bolt me-1"></i>Catégories Rapides
+            </h6>
+        </div>
+        <div class="card-body">
+            <div class="row g-2">
+                <div class="col-4">
+                    <button type="button" class="btn btn-outline-primary w-100 category-btn" data-category="Nourriture">
+                        <i class="fas fa-utensils"></i><br>
+                        <small>Nourriture</small>
+                    </button>
+                </div>
+                <div class="col-4">
+                    <button type="button" class="btn btn-outline-primary w-100 category-btn" data-category="Transport">
+                        <i class="fas fa-car"></i><br>
+                        <small>Transport</small>
+                    </button>
+                </div>
+                <div class="col-4">
+                    <button type="button" class="btn btn-outline-primary w-100 category-btn" data-category="Loisirs">
+                        <i class="fas fa-film"></i><br>
+                        <small>Loisirs</small>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Catégories rapides
+document.querySelectorAll('.category-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        document.getElementById('category').value = this.dataset.category;
+    });
+});
+
+// Validation en temps réel
+document.getElementById('transactionForm').addEventListener('submit', function(e) {
+    const amount = document.getElementById('amount').value;
+    if (!amount || amount <= 0) {
+        e.preventDefault();
+        alert('Veuillez saisir un montant valide');
+    }
+});
+</script>
+{% endblock %}

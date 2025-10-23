@@ -1,0 +1,171 @@
+/* Styles généraux pour mobile */
+body {
+    font-size: 14px;
+    padding-bottom: 60px; /* Espace pour la navigation mobile */
+}
+
+/* Navigation mobile en bas */
+.mobile-nav {
+    height: 60px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.mobile-nav .nav-link {
+    padding: 8px 5px;
+    font-size: 0.7rem;
+}
+
+.mobile-nav .nav-link i {
+    margin-bottom: 2px;
+}
+
+/* Cartes adaptées mobile */
+.card {
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 1rem;
+}
+
+.card-header {
+    font-weight: 600;
+    padding: 0.75rem 1rem;
+}
+
+/* Tableaux responsives */
+.table-responsive {
+    font-size: 0.85rem;
+}
+
+.table th {
+    white-space: nowrap;
+}
+
+/* Boutons mobiles */
+.btn-mobile {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+}
+
+/* Graphiques responsives */
+.graph-container {
+    position: relative;
+    width: 100%;
+    overflow-x: auto;
+}
+
+.graph-container img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Statistiques en grille mobile */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.stats-card {
+    text-align: center;
+    padding: 1rem;
+    border-radius: 8px;
+    color: white;
+}
+
+/* Formulaire mobile */
+.form-control {
+    font-size: 16px; /* Évite le zoom sur iOS */
+}
+
+/* Badges adaptés */
+.badge {
+    font-size: 0.7em;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container-fluid {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+    
+    h1 { font-size: 1.5rem; }
+    h2 { font-size: 1.3rem; }
+    h3 { font-size: 1.2rem; }
+    h4 { font-size: 1.1rem; }
+    h5 { font-size: 1rem; }
+    
+    /* Cacher certains éléments sur mobile */
+    .d-mobile-none {
+        display: none !important;
+    }
+    
+    /* Afficher les éléments spécifiques mobile */
+    .d-mobile-block {
+        display: block !important;
+    }
+    
+    /* Tableaux compactés */
+    .table td, .table th {
+        padding: 0.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    body {
+        font-size: 13px;
+        padding-bottom: 50px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    
+    .btn-group .btn {
+        width: auto;
+    }
+    
+    /* Navigation fixe ajustée */
+    .fixed-top {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: 1030;
+    }
+    
+    .container-fluid.mt-5 {
+        margin-top: 4rem !important;
+    }
+}
+
+/* Animations pour mobile */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Loading states */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Swipe gestures pour les graphiques */
+.graph-container {
+    -webkit-overflow-scrolling: touch;
+}

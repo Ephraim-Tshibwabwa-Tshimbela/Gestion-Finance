@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Paramètres{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">Paramètres</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="default_currency" class="form-label">Devise par défaut</label>
+                        <select class="form-select" id="default_currency" name="default_currency" required>
+                            <option value="USD" {% if user_currency == 'USD' %}selected{% endif %}>Dollar US ($)</option>
+                            <option value="CDF" {% if user_currency == 'CDF' %}selected{% endif %}>Franc Congolais (FC)</option>
+                        </select>
+                        <div class="form-text">
+                            Cette devise sera utilisée pour afficher tous les montants dans votre tableau de bord.
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Enregistrer les paramètres</button>
+                        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Retour au tableau de bord</a>
+                    </div>
+                </form>
+                
+                <hr class="my-4">
+                
+                <div class="mb-3">
+                    <h6>Informations sur les devises</h6>
+                    <ul class="list-unstyled">
+                        <li>💰 <strong>USD ($)</strong> : Dollar Américain</li>
+                        <li>💰 <strong>CDF (FC)</strong> : Franc Congolais</li>
+                    </ul>
+                    <small class="text-muted">
+                        Taux de change actuel : 1 USD = 2300 CDF<br>
+                        Les transactions peuvent être saisies dans n'importe quelle devise et seront automatiquement converties.
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
