@@ -1,18 +1,46 @@
-from flask import Flask, render_template, request, redirect, session, flash, jsonify
-import database
-import hashlib
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
-from matplotlib.patches import Rectangle
-import io
-import base64
-from datetime import datetime, timedelta
-import sqlite3
-import numpy as np
 import os
-import secrets
+import sys
+import traceback
+
+# DEBUG - Affiche tout au démarrage
+print("🚀 DÉMARRAGE APPLICATION", file=sys.stderr)
+print(f"📁 Répertoire: {os.getcwd()}", file=sys.stderr)
+print(f"📁 Fichiers: {os.listdir('.')}", file=sys.stderr)
+
+try:
+    from flask import Flask, render_template, request, redirect, session, flash, jsonify
+    import database
+    import hashlib
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    import io
+    import base64
+    from datetime import datetime
+    import sqlite3
+    import numpy as np
+    
+    print("✅ TOUS LES IMPORTS RÉUSSIS", file=sys.stderr)
+    
+except Exception as e:
+    print(f"❌ ERREUR IMPORT: {e}", file=sys.stderr)
+    traceback.print_exc(file=sys.stderr)
+    sys.exit(1)
+
+app = Flask(__name__)
+app.secret_key = os.environ.get('SECRET_KEY', 'fallback-key-123')
+# ... reste de votre code existant ...
+
+if __name__ == '__main__':
+    port = int(os.environ.get("PORT", 5000))
+    print(f"🎯 PORT: {port}", file=sys.stderr)
+    
+    try:
+        app.run(host='0.0.0.0', port=port, debug=False)
+        print("✅ APPLICATION DÉMARRÉE", file=sys.stderr)
+    except Exception as e:
+        print(f"💥 ERREUR DÉMARRAGE: {e}", file=sys.stderr)
+        traceback.print_exc(file=sys.stderr)
 
 app = Flask(__name__)
 # Clé secrète sécurisée pour la production
