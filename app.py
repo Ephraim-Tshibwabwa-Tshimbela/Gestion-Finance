@@ -1,4 +1,10 @@
 import os
+
+# Correction automatique des dossiers
+if os.path.exists('emplates') and not os.path.exists('templates'):
+    os.rename('emplates', 'templates')
+    print("✅ Dossier templates corrigé", file=sys.stderr)
+import os
 import sys
 import traceback
 
