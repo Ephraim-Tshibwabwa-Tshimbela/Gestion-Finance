@@ -11,9 +11,12 @@ import base64
 from datetime import datetime, timedelta
 import sqlite3
 import numpy as np
+import os
+import secrets
 
 app = Flask(__name__)
-app.secret_key = 'votre_cle_secrete_tres_longue_et_complexe'
+# Clé secrète sécurisée pour la production
+app.secret_key = os.environ.get('SECRET_KEY', secrets.token_hex(32))
 app.config['DATABASE'] = 'finance.db'
 
 # Taux de change fixe
@@ -339,4 +342,7 @@ def generate_mobile_expense_chart(user_id, user_currency):
         return None
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    # Désactiver le debug en production et utiliser le port de l'environnement
+    debug_mode = os.environ.get('FLASK_DEBUG', 'False').lower() == 'true'
+    port = int(os.environ.get('PORT', 5000))
+    app.run(debug=debug_mode, host='0.0.0.0', port=port)
