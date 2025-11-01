@@ -81,6 +81,15 @@ def get_user_currency(user_id):
 # Initialiser la base de données
 with app.app_context():
     database.init_db()
+    
+    
+@app.route('/test')
+def test():
+    return "✅ L'application fonctionne !"
+
+@app.route('/health')
+def health():
+    return jsonify({"status": "healthy", "timestamp": datetime.now().isoformat()})    
 
 @app.route('/')
 def index():
