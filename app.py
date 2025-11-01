@@ -1,17 +1,17 @@
 import os
-
-# Correction automatique des dossiers
-if os.path.exists('emplates') and not os.path.exists('templates'):
-    os.rename('emplates', 'templates')
-    print("✅ Dossier templates corrigé", file=sys.stderr)
-import os
 import sys
 import traceback
+import secrets
 
 # DEBUG - Affiche tout au démarrage
 print("🚀 DÉMARRAGE APPLICATION", file=sys.stderr)
 print(f"📁 Répertoire: {os.getcwd()}", file=sys.stderr)
 print(f"📁 Fichiers: {os.listdir('.')}", file=sys.stderr)
+
+# Correction automatique des dossiers
+if os.path.exists('emplates') and not os.path.exists('templates'):
+    os.rename('emplates', 'templates')
+    print("✅ Dossier templates corrigé", file=sys.stderr)
 
 try:
     from flask import Flask, render_template, request, redirect, session, flash, jsonify
@@ -32,21 +32,6 @@ except Exception as e:
     print(f"❌ ERREUR IMPORT: {e}", file=sys.stderr)
     traceback.print_exc(file=sys.stderr)
     sys.exit(1)
-
-app = Flask(__name__)
-app.secret_key = os.environ.get('SECRET_KEY', 'fallback-key-123')
-# ... reste de votre code existant ...
-
-if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
-    print(f"🎯 PORT: {port}", file=sys.stderr)
-    
-    try:
-        app.run(host='0.0.0.0', port=port, debug=False)
-        print("✅ APPLICATION DÉMARRÉE", file=sys.stderr)
-    except Exception as e:
-        print(f"💥 ERREUR DÉMARRAGE: {e}", file=sys.stderr)
-        traceback.print_exc(file=sys.stderr)
 
 app = Flask(__name__)
 # Clé secrète sécurisée pour la production
@@ -81,18 +66,25 @@ def get_user_currency(user_id):
 # Initialiser la base de données
 with app.app_context():
     database.init_db()
-    
-    
+
+# ==================== ROUTES ====================
+
 @app.route('/test')
-def test():
-    return "✅ L'application fonctionne !"
+def test_route():
+    return jsonify({
+        "status": "success", 
+        "message": "L'application fonctionne !",
+        "port": os.environ.get("PORT", "5000")
+    })
 
 @app.route('/health')
 def health():
-    return jsonify({"status": "healthy", "timestamp": datetime.now().isoformat()})    
+    return jsonify({"status": "healthy", "timestamp": datetime.now().isoformat()})
 
 @app.route('/')
 def index():
+    # Ajoutez un log pour confirmer que la route est appelée
+    print("📍 Route / appelée", file=sys.stderr)
     if 'user_id' not in session:
         return redirect('/login')
     return redirect('/dashboard')
