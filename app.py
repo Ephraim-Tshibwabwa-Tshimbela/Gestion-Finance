@@ -385,7 +385,22 @@ def generate_mobile_expense_chart(user_id, user_currency):
         return None
 
 if __name__ == '__main__':
-    # Désactiver le debug en production et utiliser le port de l'environnement
-    debug_mode = os.environ.get('FLASK_DEBUG', 'False').lower() == 'true'
-    port = int(os.environ.get('PORT', 5000))
-    app.run(debug=debug_mode, host='0.0.0.0', port=port)
+    # Récupérer le port de Railway ou utiliser 5000 en local
+    port = int(os.environ.get("PORT", 5000))
+    
+    # Afficher l'URL d'accès
+    print(f"🚀 Application démarrée sur le port: {port}", file=sys.stderr)
+    print(f"🌐 URL d'accès: http://0.0.0.0:{port}", file=sys.stderr)
+    
+    # Démarrer l'application
+    try:
+        app.run(
+            host='0.0.0.0', 
+            port=port, 
+            debug=False,
+            # Important pour Railway
+            use_reloader=False
+        )
+    except Exception as e:
+        print(f"❌ Erreur: {e}", file=sys.stderr)
+        raise
